@@ -1,4 +1,10 @@
 export default {
+  '404': {
+    buttons: {
+      backToHome: 'ir para a página inicial'
+    },
+    pageNotFound: 'oops... esta página não foi encontrada'
+  },
   navbar: {
     buttons: {
       singUp: 'cadastrar-se',

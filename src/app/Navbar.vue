@@ -3,7 +3,9 @@
     type="has-background-secondary"
     v-bind:fixed-top="true">
     <template slot="brand">
-      <b-navbar-item href="/">
+      <b-navbar-item
+        tag="router-link"
+        v-bind:to="{ name: 'home' }">
         TellYou
       </b-navbar-item>
     </template>

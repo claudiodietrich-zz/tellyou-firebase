@@ -1,7 +1,17 @@
-import Home from '@/app/home/views/Home.vue'
-
 export default {
   path: '/',
-  name: 'home',
-  component: Home
+  redirect: { name: 'home' },
+  component: () => import(/* webpackChunkName: "home" */ '@/app/home/views/Index.vue'),
+  children: [
+    {
+      path: 'home',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "home" */ '@/app/home/views/Home.vue')
+    },
+    {
+      path: 'singup',
+      name: 'singUp',
+      component: () => import(/* webpackChunkName: "home" */ '@/app/home/views/SingUp.vue')
+    }
+  ]
 }

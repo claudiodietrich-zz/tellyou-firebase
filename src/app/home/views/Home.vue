@@ -13,12 +13,12 @@
                 {{ $t('home.views.home.subtitle') }}
               </h2>
 
-              <a
-                href="#"
+              <router-link
                 class="button is-primary is-medium is-rounded"
-                v-bind:class="{'is-outlined': !isMobile}">
+                v-bind:class="{'is-outlined': !isMobile}"
+                v-bind:to="{ name: 'singUp' }">
                 {{ $t('home.views.home.buttons.letsStart') }}
-              </a>
+              </router-link>
             </div>
 
             <div class="column">

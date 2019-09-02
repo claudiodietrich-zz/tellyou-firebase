@@ -3,7 +3,22 @@ export default {
     buttons: {
       backToHome: 'ir para a página inicial'
     },
-    pageNotFound: 'oops... esta página não foi encontrada'
+    pageNotFound: 'ops... esta página não foi encontrada'
+  },
+  error: {
+    email: {
+      is: {
+        invalid: 'ops, parece que esse não é um e-mail válido!'
+      }
+    },
+    field: {
+      is: {
+        required: 'ops, você precisa preencher este campo!'
+      }
+    },
+    password: {
+      minLength: 'ops, sua senha precisa ter no mínimo {minLength} caracteres'
+    }
   },
   navbar: {
     buttons: {
@@ -36,6 +51,20 @@ export default {
         },
         buttons: {
           letsStart: 'vamos começar?'
+        }
+      },
+      singUp: {
+        buttons: {
+          singUp: 'pronto! envie minhas informações'
+        },
+        title: 'que bom que está aqui! ',
+        subtitle: 'conte pra gente sobre você, queremos te conhecer... ',
+        form: {
+          label: {
+            name: 'diga o seu nome',
+            email: 'qual o seu e-mail?',
+            password: 'agora, crie uma senha super secreta'
+          }
         }
       }
     }

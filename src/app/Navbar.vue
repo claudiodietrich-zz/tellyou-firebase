@@ -16,11 +16,11 @@
           <router-link
             class="button is-primary is-rounded"
             v-bind:to="{ name: 'singUp' }">
-            {{ $t('navbar.buttons.singUp') }}
+            {{ $t('navbar.button.singUp') }}
           </router-link>
 
           <a href="#" class="button is-light is-rounded">
-            {{ $t('navbar.buttons.logIn') }}
+            {{ $t('navbar.button.logIn') }}
           </a>
         </div>
       </b-navbar-item>

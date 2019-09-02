@@ -1,6 +1,6 @@
 export default {
   '404': {
-    buttons: {
+    button: {
       backToHome: 'ir para a página inicial'
     },
     pageNotFound: 'ops... esta página não foi encontrada'
@@ -20,17 +20,12 @@ export default {
       minLength: 'ops, sua senha precisa ter no mínimo {minLength} caracteres'
     }
   },
-  navbar: {
-    buttons: {
-      singUp: 'cadastrar-se',
-      logIn: 'entrar'
-    }
-  },
   home: {
-    views: {
+    view: {
       home: {
-        title: 'Esta é uma nova forma de compartilhar experiências!',
-        subtitle: 'TellYou é uma ferramenta que permite o compartilhamento de lições aprendidas, sobre atividades em grupo, de forma dinâmica e colaborativa.',
+        button: {
+          letsStart: 'vamos começar?'
+        },
         features: {
           shareKnowledge: {
             title: 'Compartilhe conhecimento!',
@@ -49,24 +44,27 @@ export default {
             description: 'Através do compartilhamento de ideias e lições aprendidas, é possível estabelecer pontos de melhorias em processos de trabalho e buscar métodos que otimizem e aumentem a produtividade em sua organização.'
           }
         },
-        buttons: {
-          letsStart: 'vamos começar?'
-        }
+        subtitle: 'TellYou é uma ferramenta que permite o compartilhamento de lições aprendidas, sobre atividades em grupo, de forma dinâmica e colaborativa.',
+        title: 'Esta é uma nova forma de compartilhar experiências!'
       },
       singUp: {
-        buttons: {
+        button: {
           singUp: 'pronto! envie minhas informações'
         },
-        title: 'que bom que está aqui! ',
+        label: {
+          email: 'qual o seu e-mail?',
+          name: 'diga o seu nome',
+          password: 'agora, crie uma senha super secreta'
+        },
         subtitle: 'conte pra gente sobre você, queremos te conhecer... ',
-        form: {
-          label: {
-            name: 'diga o seu nome',
-            email: 'qual o seu e-mail?',
-            password: 'agora, crie uma senha super secreta'
-          }
-        }
+        title: 'que bom que está aqui! '
       }
+    }
+  },
+  navbar: {
+    button: {
+      singUp: 'cadastrar-se',
+      logIn: 'entrar'
     }
   }
 }

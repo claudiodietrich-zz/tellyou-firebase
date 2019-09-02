@@ -12,7 +12,7 @@
       <router-link
         class="button is-primary is-rounded is-medium m-t-3"
         v-bind:to="{ name: 'home' }">
-        {{ $t('404.buttons.backToHome') }}
+        {{ $t('404.button.backToHome') }}
       </router-link>
     </div>
   </section>

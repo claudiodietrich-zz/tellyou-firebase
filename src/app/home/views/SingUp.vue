@@ -5,11 +5,11 @@
         <div class="columns">
           <div class="column is-half is-offset-one-quarter">
             <h1 class="title is-size-3-mobile is-size-2-desktop is-spaced">
-              {{ $t('home.views.singUp.title') }}
+              {{ $t('home.view.singUp.title') }}
             </h1>
 
             <h2 class="subtitle is-size-4-mobile is-size-3-desktop">
-              {{ $t('home.views.singUp.subtitle') }}
+              {{ $t('home.view.singUp.subtitle') }}
             </h2>
           </div>
         </div>
@@ -18,14 +18,14 @@
           <div class="column is-half is-offset-one-quarter">
             <div class="box">
               <b-field
-                v-bind:label="$t('home.views.singUp.form.label.name')"
+                v-bind:label="$t('home.view.singUp.label.name')"
                 v-bind:type="{ 'is-danger': $v.name.$error }"
                 v-bind:message="[ !$v.name.required && $v.name.$error ? $t('error.field.is.required'):'' ]">
                 <b-input v-model.trim="name"/>
               </b-field>
 
               <b-field
-                v-bind:label="$t('home.views.singUp.form.label.email')"
+                v-bind:label="$t('home.view.singUp.label.email')"
                 v-bind:type="{ 'is-danger': $v.email.$error }"
                 v-bind:message="[ !$v.email.required && $v.email.$error ? $t('error.field.is.required'):'',
                                   !$v.email.email && $v.email.$error ? $t('error.email.is.invalid'):'' ]">
@@ -35,7 +35,7 @@
               </b-field>
 
               <b-field
-                v-bind:label="$t('home.views.singUp.form.label.password')"
+                v-bind:label="$t('home.view.singUp.label.password')"
                 v-bind:type="{ 'is-danger': $v.password.$error }"
                 v-bind:message="[ !$v.password.required && $v.password.$error ? $t('error.field.is.required'):'',
                                   !$v.password.minLength && $v.password.$error ? $t('error.password.minLength', { minLength: 6 }):'' ]">
@@ -50,7 +50,7 @@
                   v-on:click="singUp"
                   type="is-primary"
                   rounded>
-                  {{ $t('home.views.singUp.buttons.singUp') }}
+                  {{ $t('home.view.singUp.button.singUp') }}
                 </b-button>
               </div>
             </div>

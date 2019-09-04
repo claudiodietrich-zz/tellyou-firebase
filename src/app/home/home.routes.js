@@ -12,6 +12,11 @@ export default {
       path: 'singup',
       name: 'singUp',
       component: () => import(/* webpackChunkName: "home" */ '@/app/home/views/SingUp.vue')
+    },
+    {
+      path: 'singin',
+      name: 'singIn',
+      component: () => import(/* webpackChunkName: "home" */ '@/app/home/views/SingIn.vue')
     }
   ]
 }

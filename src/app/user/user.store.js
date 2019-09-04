@@ -38,6 +38,13 @@ export default {
         throw error
       }
     },
+    async signInWithEmailAndPassword (contex, { email, password }) {
+      try {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+      } catch (error) {
+        throw error
+      }
+    },
     async updateProfile (contex, { displayName, photoUrl }) {
       try {
         const user = firebase.auth().currentUser

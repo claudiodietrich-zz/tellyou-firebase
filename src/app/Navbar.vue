@@ -19,9 +19,11 @@
             {{ $t('navbar.button.singUp') }}
           </router-link>
 
-          <a href="#" class="button is-light is-rounded">
+          <router-link
+            class="button is-light is-rounded"
+            v-bind:to="{ name: 'singIn' }">
             {{ $t('navbar.button.logIn') }}
-          </a>
+          </router-link>
         </div>
       </b-navbar-item>
     </template>

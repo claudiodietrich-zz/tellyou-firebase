@@ -86,8 +86,24 @@ export default {
     }
   },
   methods: {
-    singUp () {
-      this.$v.$touch()
+    async singUp () {
+      try {
+        this.$v.$touch()
+
+        if (!this.$v.$invalid) {
+          await this.$store.dispatch('user/singUp', {
+            displayName: this.name,
+            email: this.email,
+            password: this.password
+          })
+        }
+      } catch (error) {
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: error.message,
+          type: 'is-danger'
+        })
+      }
     }
   }
 }

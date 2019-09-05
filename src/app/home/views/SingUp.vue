@@ -21,7 +21,9 @@
                 v-bind:label="$t('home.view.singUp.label.name')"
                 v-bind:type="{ 'is-danger': $v.name.$error }"
                 v-bind:message="[ !$v.name.required && $v.name.$error ? $t('error.field.is.required'):'' ]">
-                <b-input v-model.trim="name"/>
+                <b-input
+                  v-model.trim="name"
+                  v-bind:disabled="isLoading"/>
               </b-field>
 
               <b-field
@@ -31,6 +33,7 @@
                                   !$v.email.email && $v.email.$error ? $t('error.email.is.invalid'):'' ]">
                 <b-input
                   v-model.trim="email"
+                  v-bind:disabled="isLoading"
                   type="email"/>
               </b-field>
 
@@ -41,6 +44,7 @@
                                   !$v.password.minLength && $v.password.$error ? $t('error.password.minLength', { minLength: 6 }):'' ]">
                 <b-input
                 v-model.trim="password"
+                v-bind:disabled="isLoading"
                 type="password"
                 password-reveal/>
               </b-field>
@@ -48,6 +52,7 @@
               <div class="has-text-centered">
                 <b-button
                   v-on:click="singUp"
+                  v-bind:loading="isLoading"
                   type="is-primary"
                   rounded>
                   {{ $t('home.view.singUp.button.singUp') }}
@@ -67,6 +72,7 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 export default {
   data () {
     return {
+      isLoading: false,
       name: '',
       email: '',
       password: ''
@@ -87,6 +93,7 @@ export default {
   },
   methods: {
     async singUp () {
+      this.isLoading = true
       try {
         this.$v.$touch()
 
@@ -104,6 +111,7 @@ export default {
           type: 'is-danger'
         })
       }
+      this.isLoading = false
     }
   }
 }

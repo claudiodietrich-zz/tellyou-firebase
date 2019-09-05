@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/app/home/home.routes'
 
 Vue.use(Router)
 
@@ -8,11 +7,32 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    home,
     {
-      path: '/404',
-      name: '404',
-      component: () => import(/* webpackChunkName: "404" */ '@/app/404.vue')
+      path: '/',
+      redirect: { name: 'home' },
+      component: () => import(/* webpackChunkName: "init" */ '@/App.vue'),
+      children: [
+        {
+          path: 'home',
+          name: 'home',
+          component: () => import(/* webpackChunkName: "init" */ '@/app/Home.vue')
+        },
+        {
+          path: 'singup',
+          name: 'singUp',
+          component: () => import(/* webpackChunkName: "init" */ '@/app/SingUp.vue')
+        },
+        {
+          path: 'singin',
+          name: 'singIn',
+          component: () => import(/* webpackChunkName: "init" */ '@/app/SingIn.vue')
+        },
+        {
+          path: '404',
+          name: '404',
+          component: () => import(/* webpackChunkName: "init" */ '@/app/404.vue')
+        }
+      ]
     },
     {
       path: '*',

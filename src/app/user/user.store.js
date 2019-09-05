@@ -21,6 +21,14 @@ export default {
     }
   },
   actions: {
+    startAuthenticationStateObserver (contex) {
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log(user)
+        if (user) {
+          contex.commit('updateProfile', user)
+        }
+      })
+    },
     async singUp (contex, { displayName, email, password }) {
       try {
         await contex.dispatch('createUserWithEmailAndPassword', { email, password })

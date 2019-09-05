@@ -74,7 +74,8 @@ export default {
   navbar: {
     button: {
       singUp: 'cadastrar-se',
-      logIn: 'entrar'
-    }
+      singIn: 'entrar'
+    },
+    singOut: 'sair'
   }
 }

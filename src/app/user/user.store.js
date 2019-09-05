@@ -8,7 +8,8 @@ export default {
     email: null,
     phoneNumber: null,
     photoURL: null,
-    emailVerified: false
+    emailVerified: null,
+    isLoggedIn: null
   },
   mutations: {
     updateProfile (state, { uid, displayName, email, phoneNumber, photoURL, emailVerified }) {
@@ -18,14 +19,22 @@ export default {
       state.phoneNumber = phoneNumber
       state.photoURL = photoURL
       state.emailVerified = emailVerified
+    },
+    logIn (state) {
+      state.isLoggedIn = true
+    },
+    logOut (state) {
+      Object.keys(state).forEach((key) => { state[key] = null })
     }
   },
   actions: {
     startAuthenticationStateObserver (contex) {
       firebase.auth().onAuthStateChanged((user) => {
-        console.log(user)
         if (user) {
           contex.commit('updateProfile', user)
+          contex.commit('logIn')
+        } else {
+          contex.commit('logOut')
         }
       })
     },
@@ -48,7 +57,14 @@ export default {
     },
     async signInWithEmailAndPassword (contex, { email, password }) {
       try {
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+      } catch (error) {
+        throw error
+      }
+    },
+    async singOut (contex) {
+      try {
+        await firebase.auth().signOut()
       } catch (error) {
         throw error
       }

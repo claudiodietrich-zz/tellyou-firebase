@@ -20,6 +20,7 @@
                                   !$v.email.email && $v.email.$error ? $t('error.email.is.invalid'):'' ]">
                 <b-input
                   v-model.trim="email"
+                  v-bind:disabled="isLoading"
                   type="email"/>
               </b-field>
 
@@ -30,6 +31,7 @@
                                   !$v.password.minLength && $v.password.$error ? $t('error.password.minLength', { minLength: 6 }):'' ]">
                 <b-input
                 v-model.trim="password"
+                v-bind:disabled="isLoading"
                 type="password"
                 password-reveal/>
               </b-field>
@@ -37,6 +39,7 @@
               <div class="has-text-centered">
                 <b-button
                   v-on:click="singIn"
+                  v-bind:loading="isLoading"
                   type="is-primary"
                   rounded>
                   {{ $t('home.view.singIn.button.singIn') }}
@@ -56,15 +59,13 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 export default {
   data () {
     return {
+      isLoading: false,
       name: '',
       email: '',
       password: ''
     }
   },
   validations: {
-    name: {
-      required
-    },
     email: {
       required,
       email
@@ -75,12 +76,13 @@ export default {
     }
   },
   methods: {
-    singIn () {
+    async singIn () {
+      this.isLoading = true
       try {
         this.$v.$touch()
 
         if (!this.$v.$invalid) {
-          this.$store.dispatch('user/signInWithEmailAndPassword', {
+          await this.$store.dispatch('user/signInWithEmailAndPassword', {
             email: this.email,
             password: this.password
           })
@@ -92,6 +94,7 @@ export default {
           type: 'is-danger'
         })
       }
+      this.isLoading = false
     }
   }
 }

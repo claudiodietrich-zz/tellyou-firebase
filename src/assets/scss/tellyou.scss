@@ -2,10 +2,9 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-#app {
-  padding-top: 3.25rem;
-}
-
-a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.is-active {
+.navbar-item.has-dropdown:hover,
+.navbar-link,
+.navbar-item.has-dropdown.is-active,
+.navbar-link.navbar-item.has-dropdown.is-active {
     background-color: $secondary !important;
 }

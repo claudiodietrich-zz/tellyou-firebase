@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/',
       redirect: { name: 'home' },
-      component: () => import(/* webpackChunkName: "init" */ '@/App.vue'),
+      component: () => import(/* webpackChunkName: "init" */ '@/app/Index.vue'),
       children: [
         {
           path: 'home',

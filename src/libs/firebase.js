@@ -1,6 +1,10 @@
-import * as firebase from 'firebase/app'
+import Vue from 'vue'
+import { firestorePlugin } from 'vuefire'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+
+Vue.use(firestorePlugin)
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -13,3 +17,5 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
+
+export const db = firebase.firestore()

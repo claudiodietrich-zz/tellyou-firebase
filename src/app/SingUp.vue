@@ -105,11 +105,7 @@ export default {
           })
         }
       } catch (error) {
-        this.$buefy.toast.open({
-          duration: 5000,
-          message: error.message,
-          type: 'is-danger'
-        })
+        this.errorHandler(error)
       }
       this.isLoading = false
     }

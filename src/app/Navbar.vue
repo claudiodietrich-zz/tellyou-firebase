@@ -47,11 +47,7 @@ export default {
       try {
         await this.$store.dispatch('user/singOut')
       } catch (error) {
-        this.$buefy.toast.open({
-          duration: 5000,
-          message: error.message,
-          type: 'is-danger'
-        })
+        this.errorHandler(error)
       }
     }
   }

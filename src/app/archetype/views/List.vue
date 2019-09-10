@@ -28,7 +28,7 @@
       <div class="card mb-4"
         v-for="archetype in archetypes"
         v-bind:key="archetype.id">
-        <div class="card-header">
+        <header class="card-header">
           <div class="card-header-title">
             {{ archetype.name }}
             <b-tag
@@ -38,11 +38,19 @@
               {{ archetype.isRequired ? $t('archetype.view.form.label.required') : $t('archetype.view.form.label.optional') }}
             </b-tag>
           </div>
-        </div>
+        </header>
 
         <div class="card-content">
           {{ archetype.description }}
         </div>
+
+        <footer class="card-footer">
+          <button
+            class="button is-danger"
+            v-on:click="confirmDelete(archetype)">
+            exluir
+          </button>
+        </footer>
       </div>
     </div>
   </section>
@@ -54,7 +62,8 @@ import { db } from '@/libs/firebase'
 export default {
   data () {
     return {
-      archetypes: []
+      archetypes: [],
+      archetypeToDelete: null
     }
   },
   methods: {
@@ -68,14 +77,45 @@ export default {
       }
 
       this.endRequest()
+    },
+    async deleteArchetype () {
+      try {
+        await db.collection('archetypes').doc(this.archetypeToDelete.id).delete()
+        this.$buefy.toast.open('Account deleted!')
+      } catch (error) {
+        this.errorHandler(error)
+      }
+    },
+    confirmDelete (archetype) {
+      this.archetypeToDelete = archetype
+
+      this.$buefy.dialog.confirm({
+        title: 'Deleting account',
+        message: 'Are you sure you want to <b>delete</b> your account? This action cannot be undone.',
+        confirmText: 'Delete Account',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: async () => {
+          await this.deleteArchetype()
+          this.archetypeToDelete = null
+        }
+      })
     }
   },
   mounted () {
     try {
       this.getArchetypes()
     } catch (error) {
-      this.erroHandler(error)
+      this.errorHandler(error)
     }
   }
 }
 </script>
+
+<style scoped>
+.card-footer {
+  text-align: right;
+  padding: 0.5rem;
+  display: block;
+}
+</style>

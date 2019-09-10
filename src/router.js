@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import archetype from '@/app/archetype/archetype.routes'
 
 Vue.use(Router)
 
@@ -31,7 +32,8 @@ export default new Router({
           path: '404',
           name: '404',
           component: () => import(/* webpackChunkName: "init" */ '@/app/404.vue')
-        }
+        },
+        archetype
       ]
     },
     {

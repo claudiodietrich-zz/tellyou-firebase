@@ -1,0 +1,17 @@
+export default {
+  path: 'archetype',
+  redirect: { name: 'archetypeList' },
+  component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/Index.vue'),
+  children: [
+    {
+      path: 'list',
+      name: 'archetypeList',
+      component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/List.vue')
+    },
+    {
+      path: 'create',
+      name: 'archetypeCreate',
+      component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/Form.vue')
+    }
+  ]
+}

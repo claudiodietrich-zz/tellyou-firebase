@@ -5,6 +5,25 @@ export default {
     },
     pageNotFound: 'ops... esta página não foi encontrada'
   },
+  archetype: {
+    label: 'arqutétipo | arqutétipos',
+    view: {
+      form: {
+        label: {
+          description: 'que tal uma descrição bem legal sobre ele?',
+          isRequired: 'ele é obrigatório ou opcional?',
+          name: 'como esse arqutétipo se chama?',
+          optional: 'opcional',
+          required: 'obrigatório'
+        }
+      }
+    }
+  },
+  default: {
+    label: {
+      add: 'adicionar {0}'
+    }
+  },
   error: {
     email: {
       is: {

@@ -1,5 +1,10 @@
 <template>
   <section class="section">
+    <b-loading
+      v-bind:is-full-page="true"
+      v-bind:active.sync="isUnderRequest"
+      v-bind:can-cancel="false"/>
+
     <div class="container">
       <div class="level">
         <div class="level-left">
@@ -52,8 +57,25 @@ export default {
       archetypes: []
     }
   },
-  firestore: {
-    archetypes: db.collection('archetypes')
+  methods: {
+    async getArchetypes () {
+      this.startRequest()
+
+      try {
+        await this.$bind('archetypes', db.collection('archetypes'))
+      } catch (error) {
+        throw error
+      }
+
+      this.endRequest()
+    }
+  },
+  mounted () {
+    try {
+      this.getArchetypes()
+    } catch (error) {
+      this.erroHandler(error)
+    }
   }
 }
 </script>

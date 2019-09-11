@@ -21,7 +21,8 @@ export default {
   },
   default: {
     label: {
-      add: 'adicionar {0}'
+      add: 'adicionar {0}',
+      edit: 'editar {0}'
     }
   },
   error: {

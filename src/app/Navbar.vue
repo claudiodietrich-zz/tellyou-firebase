@@ -12,6 +12,12 @@
 
     <template slot="end" v-if="this.$store.state.user.isLoggedIn">
       <b-navbar-dropdown v-bind:label="this.$store.state.user.displayName">
+        <router-link
+          class="navbar-item"
+          v-bind:to="{ name: 'archetype' }">
+          {{ $tc('archetype.label', 2) }}
+        </router-link>
+
         <a
           class="navbar-item"
           v-on:click="signOut">

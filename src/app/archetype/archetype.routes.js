@@ -1,5 +1,6 @@
 export default {
   path: 'archetype',
+  name: 'archetype',
   redirect: { name: 'archetypeList' },
   component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/Index.vue'),
   children: [
@@ -11,6 +12,11 @@ export default {
     {
       path: 'create',
       name: 'archetypeCreate',
+      component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/Form.vue')
+    },
+    {
+      path: 'edit/:id',
+      name: 'archetypeEdit',
       component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/Form.vue')
     }
   ]

@@ -45,6 +45,11 @@
         </div>
 
         <footer class="card-footer">
+          <router-link class="button is-primary mr-2"
+            v-bind:to="{ name: 'archetypeEdit', params: { id: archetype.id } }">
+            {{ $t('default.label.edit', []) }}
+          </router-link>
+
           <button
             class="button is-danger"
             v-on:click="confirmDelete(archetype)">

@@ -10,7 +10,7 @@
         <div class="level-left">
           <div class="level-item">
             <h1 class="title">
-              {{ $tc('archetype.label', 2) }}
+              {{ $tc('default.label.archetype', 2) }}
             </h1>
           </div>
         </div>
@@ -19,7 +19,7 @@
           <div class="level-item">
             <router-link class="button is-primary is-rounded"
               v-bind:to="{ name: 'archetypeCreate' }">
-              {{ $t('default.label.add', [ $tc('archetype.label', 1) ]) }}
+              {{ $t('default.label.add', [ $tc('default.label.archetype', 1) ]) }}
             </router-link>
           </div>
         </div>
@@ -35,7 +35,7 @@
               class="ml-2"
               v-bind:type="archetype.isRequired ? 'is-primary' : 'is-secondary'"
               rounded>
-              {{ archetype.isRequired ? $t('archetype.view.form.label.required') : $t('archetype.view.form.label.optional') }}
+              {{ archetype.isRequired ? $t('default.label.required') : $t('default.label.optional') }}
             </b-tag>
           </div>
         </header>
@@ -95,9 +95,10 @@ export default {
       this.archetypeToDelete = archetype
 
       this.$buefy.dialog.confirm({
-        title: 'Deleting account',
-        message: 'Are you sure you want to <b>delete</b> your account? This action cannot be undone.',
-        confirmText: 'Delete Account',
+        title: this.$t('default.confirm.delete.title', [this.$tc('default.label.archetype', 1)]),
+        message: this.$t('default.confirm.delete.message'),
+        confirmText: this.$t('default.confirm.delete.confirmText', [this.$tc('default.label.archetype', 1)]),
+        cancelText: this.$t('default.confirm.delete.cancelText'),
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {

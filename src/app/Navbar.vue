@@ -15,7 +15,13 @@
         <router-link
           class="navbar-item"
           v-bind:to="{ name: 'archetype' }">
-          {{ $tc('archetype.label', 2) }}
+          {{ $tc('default.label.archetype', 2) }}
+        </router-link>
+
+        <router-link
+          class="navbar-item"
+          v-bind:to="{ name: 'stage' }">
+          {{ $tc('default.label.stage', 2) }}
         </router-link>
 
         <a

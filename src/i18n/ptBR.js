@@ -6,13 +6,12 @@ export default {
     pageNotFound: 'ops... esta página não foi encontrada'
   },
   archetype: {
-    label: 'arqutétipo | arqutétipos',
     view: {
       form: {
         label: {
           description: 'que tal uma descrição bem legal sobre ele?',
           isRequired: 'ele é obrigatório ou opcional?',
-          name: 'como esse arqutétipo se chama?',
+          name: 'qual o nome do arquétipo?',
           optional: 'opcional',
           required: 'obrigatório'
         }
@@ -20,9 +19,21 @@ export default {
     }
   },
   default: {
+    confirm: {
+      delete: {
+        title: 'excluir {0}',
+        message: 'Tem certeza de que deseja executar essa ação?',
+        confirmText: 'excluir {0}',
+        cancelText: 'cancelar'
+      }
+    },
     label: {
       add: 'adicionar {0}',
-      edit: 'editar {0}'
+      archetype: 'arquétipo | arquétipos',
+      edit: 'editar {0}',
+      optional: 'opcional',
+      required: 'obrigatório',
+      stage: 'estágio | estágios'
     }
   },
   error: {
@@ -97,5 +108,19 @@ export default {
       singIn: 'entrar'
     },
     singOut: 'sair'
+  },
+  stage: {
+    view: {
+      form: {
+        label: {
+          archetypes: 'quais arquétipos fazem parte deste estágio?',
+          contexts: 'este estágio poderia estar inserido em quais contextos?',
+          description: 'que tal uma descrição bem legal sobre ele?',
+          isRequired: 'ele é obrigatório ou opcional?',
+          keyPhrases: 'crie frases-chaves para ajudar na criação dos eventos.',
+          name: 'qual é o nome do estágio?'
+        }
+      }
+    }
   }
 }

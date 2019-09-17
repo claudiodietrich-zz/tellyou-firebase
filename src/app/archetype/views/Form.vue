@@ -3,12 +3,12 @@
     <div class="container">
       <h1 class="title"
         v-if="currentRoute === 'archetypeCreate'">
-        {{ $t('default.label.add', [ $tc('archetype.label', 1) ]) }}
+        {{ $t('default.label.add', [ $tc('default.label.archetype', 1) ]) }}
       </h1>
 
       <h1 class="title"
         v-if="currentRoute === 'archetypeEdit'">
-        {{ $t('default.label.edit', [ $tc('archetype.label', 1) ]) }}
+        {{ $t('default.label.edit', [ $tc('default.label.archetype', 1) ]) }}
       </h1>
 
       <div class="box">
@@ -35,7 +35,7 @@
           <b-switch
             v-model="archetype.isRequired"
             v-bind:disabled="isUnderRequest">
-            {{ archetype.isRequired ? $t('archetype.view.form.label.required') : $t('archetype.view.form.label.optional') }}
+            {{ archetype.isRequired ? $t('default.label.required') : $t('default.label.optional') }}
           </b-switch>
         </b-field>
 
@@ -46,7 +46,7 @@
             v-bind:loading="isUnderRequest"
             type="is-primary"
             rounded>
-            {{ $t('default.label.add', [ $tc('archetype.label', 1) ]) }}
+            {{ $t('default.label.add', [ $tc('default.label.archetype', 1) ]) }}
           </b-button>
 
           <b-button
@@ -55,7 +55,7 @@
             v-bind:loading="isUnderRequest"
             type="is-primary"
             rounded>
-            {{ $t('default.label.edit', [ $tc('archetype.label', 1) ]) }}
+            {{ $t('default.label.edit', [ $tc('default.label.archetype', 1) ]) }}
           </b-button>
         </div>
       </div>

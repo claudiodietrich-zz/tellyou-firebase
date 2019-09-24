@@ -86,7 +86,7 @@ export default {
     async deleteArchetype () {
       try {
         await db.collection('archetypes').doc(this.archetypeToDelete.id).delete()
-        this.$buefy.toast.open('Account deleted!')
+        this.$buefy.toast.open(this.$tc('default.message.delete', 1, [this.$tc('default.label.archetype', 1)]))
       } catch (error) {
         this.errorHandler(error)
       }

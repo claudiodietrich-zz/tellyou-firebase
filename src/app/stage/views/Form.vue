@@ -100,11 +100,12 @@ export default {
       archetypesList: null,
       filteredArchetypesList: [],
       stage: {
-        name: null,
-        description: null,
-        archetypes: null,
-        contexts: null,
-        keyPhrases: null
+        name: '',
+        description: '',
+        archetypes: [],
+        contexts: [],
+        keyPhrases: [],
+        isRequired: false
       }
     }
   },

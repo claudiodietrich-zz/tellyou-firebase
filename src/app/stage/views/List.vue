@@ -62,7 +62,7 @@
             <div class="column">
               <div class="content">
                 <p class="is-capitalized has-text-weight-bold">
-                  {{ $tc('default.label.archetype', stage.archetypes.length) }}
+                  {{ $tc('default.label.context', stage.contexts.length) }}
                 </p>
                 <ul>
                   <li
@@ -77,7 +77,7 @@
             <div class="column">
               <div class="content">
                 <p class="is-capitalized has-text-weight-bold">
-                  {{ $tc('default.label.archetype', stage.archetypes.length) }}
+                  {{ $tc('default.label.keyPhrase', stage.keyPhrases.length) }}
                 </p>
                 <ul>
                   <li
@@ -131,7 +131,7 @@ export default {
     async deleteStage () {
       try {
         await db.collection('stages').doc(this.stageToDelete.id).delete()
-        this.$buefy.toast.open('Account deleted!')
+        this.$buefy.toast.open(this.$tc('default.message.delete', 1, [this.$tc('default.label.stage', 1)]))
       } catch (error) {
         this.errorHandler(error)
       }

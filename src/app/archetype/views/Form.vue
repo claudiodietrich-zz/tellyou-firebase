@@ -72,9 +72,9 @@ export default {
     return {
       currentRoute: this.$route.name,
       archetype: {
-        name: null,
-        description: null,
-        isRequired: null
+        name: '',
+        description: '',
+        isRequired: false
       }
     }
   },

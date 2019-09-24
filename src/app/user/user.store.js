@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app'
+import { db } from '@/libs/firebase'
 
 export default {
   namespaced: true,
@@ -43,6 +44,14 @@ export default {
         await contex.dispatch('createUserWithEmailAndPassword', { email, password })
 
         await contex.dispatch('updateProfile', { displayName })
+
+        const user = firebase.auth().currentUser
+
+        await db.collection('users').add({
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email
+        })
       } catch (error) {
         throw error
       }

@@ -100,7 +100,7 @@
           <button
             class="button is-danger"
             v-on:click="confirmDelete(stage)">
-            exluir
+            {{ $t('default.label.delete', []) }}
           </button>
         </footer>
       </div>

@@ -30,10 +30,21 @@ export default {
     label: {
       add: 'adicionar {0}',
       archetype: 'arquétipo | arquétipos',
+      backward: 'voltar',
+      context: 'contexto | contextos',
+      character: 'personagem | personagens',
+      delete: 'excluir {0}',
+      description: 'descrição | descrições',
       edit: 'editar {0}',
+      forward: 'avançar',
+      keyPhrase: 'palavra-chave | palavras-chave',
       optional: 'opcional',
       required: 'obrigatório',
-      stage: 'estágio | estágios'
+      stage: 'estágio | estágios',
+      story: 'história | histórias'
+    },
+    message: {
+      delete: '{0} excluído com sucesso| {0} excluídos com sucesso'
     }
   },
   error: {
@@ -119,6 +130,29 @@ export default {
           isRequired: 'ele é obrigatório ou opcional?',
           keyPhrases: 'crie frases-chaves para ajudar na criação dos eventos.',
           name: 'qual é o nome do estágio?'
+        }
+      }
+    }
+  },
+  story: {
+    view: {
+      form: {
+        label: {
+          authors: 'os contadores irão narrar cada evento que irá compor a história. ',
+          keywords: 'palavras-chaves ajudam outras pessoas a encontrarem sua história',
+          leader: 'o líder irá conduzir o desenvolvimento da narrativa, organizar a história e estimular a participação do grupo.',
+          objective: 'qual o objetivo da história?',
+          reviewers: 'os revisores irão editar a história, formatando e aprimorando o texto, até a sua finalização.',
+          title: 'qual o título da história?'
+        },
+        message: {
+          keywords: 'a cada palavra-chave digitada, pressione enter'
+        },
+        step: {
+          archetype: 'arquétipos',
+          author: 'autores',
+          info: 'informações básicas',
+          stage: 'estágios'
         }
       }
     }

@@ -10,7 +10,7 @@
         <div class="level-left">
           <div class="level-item">
             <h1 class="title">
-              {{ $tc('default.label.archetype', 2) }}
+              {{ $tc('default.label.story', 2) }}
             </h1>
           </div>
         </div>
@@ -18,45 +18,60 @@
         <div class="level-right">
           <div class="level-item">
             <router-link class="button is-primary is-rounded"
-              v-bind:to="{ name: 'archetypeCreate' }">
-              {{ $t('default.label.add', [ $tc('default.label.archetype', 1) ]) }}
+              v-bind:to="{ name: 'storyCreate' }">
+              {{ $t('default.label.add', [ $tc('default.label.story', 1) ]) }}
             </router-link>
           </div>
         </div>
       </div>
 
-      <div class="card mb-4"
-        v-for="archetype in archetypes"
-        v-bind:key="archetype.id">
-        <header class="card-header">
+      <b-collapse
+        class="card mb-4"
+        v-for="story in stories"
+        v-bind:key="story.id"
+        v-bind:open="false">
+        <header
+          class="card-header"
+          slot="trigger"
+          slot-scope="props"
+          role="button">
           <div class="card-header-title">
-            {{ archetype.name }}
-            <b-tag
-              class="ml-2"
-              v-bind:type="archetype.isRequired ? 'is-primary' : 'is-secondary'"
-              rounded>
-              {{ archetype.isRequired ? $t('default.label.required') : $t('default.label.optional') }}
-            </b-tag>
+            {{ story.title }}
           </div>
+          <a class="card-header-icon">
+            <b-icon v-bind:icon="props.open ? 'caret-up' : 'caret-down'"/>
+          </a>
         </header>
 
         <div class="card-content">
-          {{ archetype.description }}
+          <div class="content">
+            {{ story.objective }}
+
+            <b-taglist class="mt-3">
+              <b-tag
+                v-for="keyword in story.keywords"
+                v-bind:key="keyword"
+                type="is-secondary"
+                rounded>
+                {{ keyword }}
+              </b-tag>
+            </b-taglist>
+          </div>
         </div>
 
         <footer class="card-footer">
           <router-link class="button is-primary mr-2"
-            v-bind:to="{ name: 'archetypeEdit', params: { id: archetype.id } }">
+            v-bind:to="{ name: 'storyEdit', params: { id: story.id } }">
             {{ $t('default.label.edit', []) }}
           </router-link>
 
           <button
             class="button is-danger"
-            v-on:click="confirmDelete(archetype)">
+            v-on:click="confirmDelete(story)">
             {{ $t('default.label.delete', []) }}
           </button>
         </footer>
-      </div>
+      </b-collapse>
     </div>
   </section>
 </template>
@@ -67,50 +82,48 @@ import { db } from '@/libs/firebase'
 export default {
   data () {
     return {
-      archetypes: [],
-      archetypeToDelete: null
+      stories: [],
+      storyToDelete: null
     }
   },
   methods: {
-    async getArchetypes () {
+    async getStories () {
       this.startRequest()
-
       try {
-        await this.$bind('archetypes', db.collection('archetypes'))
+        await this.$bind('stories', db.collection('stories'))
       } catch (error) {
         throw error
       }
-
       this.endRequest()
     },
-    async deleteArchetype () {
+    async deleteStory () {
       try {
-        await db.collection('archetypes').doc(this.archetypeToDelete.id).delete()
-        this.$buefy.toast.open(this.$tc('default.message.delete', 1, [this.$tc('default.label.archetype', 1)]))
+        await db.collection('stories').doc(this.storyToDelete.id).delete()
+        this.$buefy.toast.open(this.$tc('default.message.delete', 1, [this.$tc('default.label.story', 1)]))
       } catch (error) {
         this.errorHandler(error)
       }
     },
-    confirmDelete (archetype) {
-      this.archetypeToDelete = archetype
+    confirmDelete (story) {
+      this.storyToDelete = story
 
       this.$buefy.dialog.confirm({
-        title: this.$t('default.confirm.delete.title', [this.$tc('default.label.archetype', 1)]),
+        title: this.$t('default.confirm.delete.title', [this.$tc('default.label.story', 1)]),
         message: this.$t('default.confirm.delete.message'),
-        confirmText: this.$t('default.confirm.delete.confirmText', [this.$tc('default.label.archetype', 1)]),
+        confirmText: this.$t('default.confirm.delete.confirmText', [this.$tc('default.label.story', 1)]),
         cancelText: this.$t('default.confirm.delete.cancelText'),
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {
-          await this.deleteArchetype()
-          this.archetypeToDelete = null
+          await this.deleteStory()
+          this.storyToDelete = null
         }
       })
     }
   },
   mounted () {
     try {
-      this.getArchetypes()
+      this.getStories()
     } catch (error) {
       this.errorHandler(error)
     }

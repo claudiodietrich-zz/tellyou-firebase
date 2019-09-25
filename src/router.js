@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import archetype from '@/app/archetype/archetype.routes'
 import stage from '@/app/stage/stage.routes'
+import story from '@/app/story/story.routes'
 
 Vue.use(Router)
 
@@ -35,7 +36,8 @@ export default new Router({
           component: () => import(/* webpackChunkName: "init" */ '@/app/404.vue')
         },
         archetype,
-        stage
+        stage,
+        story
       ]
     },
     {

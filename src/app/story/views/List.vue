@@ -61,6 +61,11 @@
 
         <footer class="card-footer">
           <router-link class="button is-primary mr-2"
+            v-bind:to="{ name: 'storyView', params: { id: story.id } }">
+            {{ $t('default.label.tell', [ $tc('default.label.story') ]) }}
+          </router-link>
+
+          <router-link class="button is-primary mr-2"
             v-bind:to="{ name: 'storyEdit', params: { id: story.id } }">
             {{ $t('default.label.edit', []) }}
           </router-link>

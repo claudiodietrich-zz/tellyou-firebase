@@ -18,6 +18,11 @@ export default {
       path: 'edit/:id',
       name: 'storyEdit',
       component: () => import(/* webpackChunkName: "story" */ '@/app/story/views/Form.vue')
+    },
+    {
+      path: ':id',
+      name: 'storyView',
+      component: () => import(/* webpackChunkName: "story" */ '@/app/story/views/View.vue'),
     }
   ]
 }

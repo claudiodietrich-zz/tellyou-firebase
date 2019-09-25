@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Buefy from 'buefy'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import 'bulma-timeline/dist/css/bulma-timeline.min.css'
 
 Vue.component('vue-fontawesome', FontAwesomeIcon)
 Vue.use(Buefy, {

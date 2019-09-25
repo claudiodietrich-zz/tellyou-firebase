@@ -38,10 +38,12 @@ export default {
       edit: 'editar {0}',
       forward: 'avançar',
       keyPhrase: 'palavra-chave | palavras-chave',
+      objective: 'objetivo | objetivos',
       optional: 'opcional',
       required: 'obrigatório',
       stage: 'estágio | estágios',
-      story: 'história | histórias'
+      story: 'história | histórias',
+      tell: 'contar {0}'
     },
     message: {
       delete: '{0} excluído com sucesso| {0} excluídos com sucesso'

@@ -24,6 +24,12 @@
           {{ $tc('default.label.stage', 2) }}
         </router-link>
 
+        <router-link
+          class="navbar-item"
+          v-bind:to="{ name: 'story' }">
+          {{ $tc('default.label.story', 2) }}
+        </router-link>
+
         <a
           class="navbar-item"
           v-on:click="signOut">

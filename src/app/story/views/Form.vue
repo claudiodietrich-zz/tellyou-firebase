@@ -231,6 +231,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import { db } from '@/libs/firebase'
+import storyEnums from '@/app/story/story.enum'
 
 export default {
   data () {
@@ -243,6 +244,7 @@ export default {
       archetypesAreValid: true,
       currentRoute: this.$route.name,
       story: {
+        status: storyEnums.STATUS.underConstruction,
         title: null,
         keywords: [],
         objective: null,

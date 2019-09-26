@@ -35,7 +35,7 @@
               <div class="timeline-content">
                 <router-link
                   class="heading has-badge-rounded"
-                  v-bind:to="{ name: 'stageView', params: { stageId: stage.id } }">
+                  v-bind:to="{ name: 'storyStageView', params: { storyId: story.id, stageId: stage.id } }">
                   {{ `${index + 1} - ${stage.name}` }}
                 </router-link>
               </div>

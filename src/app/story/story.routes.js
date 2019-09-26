@@ -22,7 +22,12 @@ export default {
     {
       path: ':id',
       name: 'storyView',
-      component: () => import(/* webpackChunkName: "story" */ '@/app/story/views/View.vue'),
+      component: () => import(/* webpackChunkName: "story" */ '@/app/story/views/View.vue')
+    },
+    {
+      path: ':storyId/stage/:stageId',
+      name: 'storyStageView',
+      component: () => import(/* webpackChunkName: "story" */ '@/app/story/views/StoryStage.vue')
     }
   ]
 }

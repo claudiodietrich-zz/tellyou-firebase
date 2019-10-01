@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
 import { required, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -82,10 +83,8 @@ export default {
         this.$v.$touch()
 
         if (!this.$v.$invalid) {
-          await this.$store.dispatch('user/signInWithEmailAndPassword', {
-            email: this.email,
-            password: this.password
-          })
+          await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+          this.$router.push({ name: 'storyList' })
         }
       } catch (error) {
         this.errorHandler(error)

@@ -10,8 +10,8 @@
       </b-navbar-item>
     </template>
 
-    <template slot="end" v-if="this.$store.state.user.isLoggedIn">
-      <b-navbar-dropdown v-bind:label="this.$store.state.user.displayName">
+    <template slot="end" v-if="currentUser">
+      <b-navbar-dropdown v-bind:label="currentUser.displayName">
         <router-link
           class="navbar-item"
           v-bind:to="{ name: 'archetype' }">
@@ -59,11 +59,19 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+
 export default {
+  computed: {
+    currentUser () {
+      return firebase.auth().currentUser
+    }
+  },
   methods: {
     async signOut () {
       try {
-        await this.$store.dispatch('user/singOut')
+        await firebase.auth().signOut()
+        this.$router.push({ name: 'home' })
       } catch (error) {
         this.errorHandler(error)
       }

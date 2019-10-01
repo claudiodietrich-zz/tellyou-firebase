@@ -67,7 +67,9 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
 import { required, email, minLength } from 'vuelidate/lib/validators'
+import { db } from '@/libs/firebase'
 
 export default {
   data () {
@@ -98,11 +100,18 @@ export default {
         this.$v.$touch()
 
         if (!this.$v.$invalid) {
-          await this.$store.dispatch('user/singUp', {
-            displayName: this.name,
-            email: this.email,
-            password: this.password
+          await firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+
+          const user = firebase.auth().currentUser
+          await user.updateProfile({ displayName: this.name })
+
+          await db.collection('users').add({
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email
           })
+
+          this.$router.push({ name: 'storyList' })
         }
       } catch (error) {
         this.errorHandler(error)

@@ -40,6 +40,10 @@ export default {
       event: 'evento | eventos',
       forward: 'avançar',
       keyPhrase: 'palavra-chave | palavras-chave',
+      no: {
+        data: 'ops, ainda não existe {0} no sistema | ops, ainda não existem {0} no sistema',
+        result: 'ops, nenhum resultado encontrado'
+      },
       objective: 'objetivo | objetivos',
       optional: 'opcional',
       required: 'obrigatório',

@@ -40,6 +40,7 @@
             field="name"
             type="is-primary"
             autocomplete>
+            <template slot="empty">{{ $t('default.label.no.result') }}</template>
           </b-taginput>
         </b-field>
 

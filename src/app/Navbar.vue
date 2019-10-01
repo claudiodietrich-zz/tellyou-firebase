@@ -11,24 +11,26 @@
     </template>
 
     <template slot="end" v-if="currentUser">
-      <b-navbar-dropdown v-bind:label="currentUser.displayName">
-        <router-link
-          class="navbar-item"
+      <b-navbar-dropdown
+        v-bind:label="currentUser.displayName"
+        v-bind:boxed="true">
+        <b-navbar-item
+          tag="router-link"
           v-bind:to="{ name: 'archetype' }">
           {{ $tc('default.label.archetype', 2) }}
-        </router-link>
+        </b-navbar-item>
 
-        <router-link
-          class="navbar-item"
+        <b-navbar-item
+          tag="router-link"
           v-bind:to="{ name: 'stage' }">
           {{ $tc('default.label.stage', 2) }}
-        </router-link>
+        </b-navbar-item>
 
-        <router-link
-          class="navbar-item"
+        <b-navbar-item
+          tag="router-link"
           v-bind:to="{ name: 'story' }">
           {{ $tc('default.label.story', 2) }}
-        </router-link>
+        </b-navbar-item>
 
         <a
           class="navbar-item"

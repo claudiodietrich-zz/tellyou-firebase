@@ -2,6 +2,9 @@ export default {
   path: 'archetype',
   name: 'archetype',
   redirect: { name: 'archetypeList' },
+  meta: {
+    requiresSession: true
+  },
   component: () => import(/* webpackChunkName: "archetype" */ '@/app/archetype/views/Index.vue'),
   children: [
     {

@@ -11,13 +11,6 @@ import TellyouNavbar from '@/app/Navbar.vue'
 export default {
   components: {
     TellyouNavbar
-  },
-  created () {
-    try {
-      this.$store.dispatch('user/startAuthenticationStateObserver')
-    } catch (error) {
-
-    }
   }
 }
 </script>

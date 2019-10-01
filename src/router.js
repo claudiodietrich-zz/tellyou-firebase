@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import * as firebase from 'firebase/app'
 import archetype from '@/app/archetype/archetype.routes'
 import stage from '@/app/stage/stage.routes'
 import story from '@/app/story/story.routes'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -48,3 +49,30 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const sessionExists = firebase.auth().currentUser
+  const requiresSession = to.matched.some(route => route.meta.requiresSession)
+
+  if (requiresSession && sessionExists) {
+    next()
+  }
+
+  if (!requiresSession && !sessionExists) {
+    next()
+  }
+
+  if (!requiresSession && sessionExists) {
+    next({ name: 'storyList' })
+  }
+
+  if (requiresSession && !sessionExists) {
+    next({ name: 'home' })
+  }
+
+  if (to.name === '404') {
+    next()
+  }
+})
+
+export default router

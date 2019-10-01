@@ -2,6 +2,9 @@ export default {
   path: 'stage',
   name: 'stage',
   redirect: { name: 'stageList' },
+  meta: {
+    requiresSession: true
+  },
   component: () => import(/* webpackChunkName: "stage" */ '@/app/stage/views/Index.vue'),
   children: [
     {

@@ -2,6 +2,9 @@ export default {
   path: 'story',
   name: 'story',
   redirect: { name: 'storyList' },
+  meta: {
+    requiresSession: true
+  },
   component: () => import(/* webpackChunkName: "story" */ '@/app/story/views/Index.vue'),
   children: [
     {

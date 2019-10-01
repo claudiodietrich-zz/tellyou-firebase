@@ -229,6 +229,7 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
 import { required } from 'vuelidate/lib/validators'
 import { db } from '@/libs/firebase'
 import storyEnums from '@/app/story/story.enum'
@@ -392,10 +393,12 @@ export default {
         this.archetypesTableData.push(storyArchetype)
       })
     } else {
+      const currentUser = firebase.auth().currentUser
+
       this.story.leader = {
-        uid: this.$store.state.user.uid,
-        name: this.$store.state.user.displayName,
-        email: this.$store.state.user.email
+        uid: currentUser.uid,
+        name: currentUser.displayName,
+        email: currentUser.email
       }
 
       this.story.archetypes = this.archetypesTableData.filter(archetype => {

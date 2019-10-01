@@ -9,19 +9,16 @@ Object.freeze(STATUS)
 const ALL_STATUS = Object.values(STATUS)
 Object.freeze(ALL_STATUS)
 
-const AUTORS_ROLES = {
-  leader: 0,
-  reviewer: 1,
-  storyteller: 2
-}
-Object.freeze(AUTORS_ROLES)
-
-const ALL_AUTORS_ROLES = Object.values(AUTORS_ROLES)
-Object.freeze(ALL_AUTORS_ROLES)
+const STATUS_LIST = [
+  { value: 0, text: 'em construção' },
+  { value: 1, text: 'em revisão' },
+  { value: 2, text: 'revisada' },
+  { value: 3, text: 'finalziada' }
+]
+Object.freeze(STATUS_LIST)
 
 export default {
   STATUS,
   ALL_STATUS,
-  AUTORS_ROLES,
-  ALL_AUTORS_ROLES
+  STATUS_LIST
 }

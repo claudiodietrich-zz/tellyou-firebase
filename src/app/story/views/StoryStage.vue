@@ -6,9 +6,31 @@
       v-bind:can-cancel="false"/>
 
     <div class="container">
-      <h1 class="title">
-        {{ stage.name }}
-      </h1>
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <h1 class="title">
+              {{ stage.name }}
+            </h1>
+          </div>
+        </div>
+
+        <div class="level-right">
+          <div class="level-item">
+            <b-select
+              v-model="currentStatus"
+              v-on:input="selectEventsFromStatus">
+              <option
+                v-for="status in storyStatusList"
+                v-bind:value="status.value"
+                v-bind:key="status.value">
+                {{ status.text }}
+              </option>
+            </b-select>
+          </div>
+        </div>
+      </div>
+
       <h2 class="subtitle">
         {{ stage.description }}
       </h2>
@@ -88,6 +110,7 @@
 import { required, requiredIf } from 'vuelidate/lib/validators'
 import { db } from '@/libs/firebase'
 import EventEditModal from '@/app/story/components/EventEditModal.vue'
+import storyEnums from '@/app/story/story.enum'
 
 export default {
   components: {
@@ -98,6 +121,8 @@ export default {
       eventToDeleted: {},
       eventToBeUpdated: {},
       isEditEventModalActive: false,
+      storyStatusList: storyEnums.STATUS_LIST,
+      currentStatus: 0,
       story: {},
       stage: {},
       events: [],
@@ -174,12 +199,29 @@ export default {
     openEditEventModal (event) {
       this.eventToBeUpdated = event
       this.isEditEventModalActive = true
+    },
+    async selectEventsFromStatus (status) {
+      await this.$bind('events',
+        db.collection('events')
+          .where('storyId', '==', this.story.id)
+          .where('storyStatus', '==', status)
+          .where('stageId', '==', this.stage.id)
+          .orderBy('number')
+      )
     }
   },
   async created () {
     await this.$bind('story', db.collection('stories').doc(this.$route.params.storyId))
     await this.$bind('stage', db.collection('stages').doc(this.$route.params.stageId))
-    await this.$bind('events', db.collection('events').where('storyId', '==', this.$route.params.storyId).where('stageId', '==', this.$route.params.stageId).orderBy('number'))
+    await this.$bind('events',
+      db.collection('events')
+        .where('storyId', '==', this.story.id)
+        .where('storyStatus', '==', this.story.status)
+        .where('stageId', '==', this.stage.id)
+        .orderBy('number')
+    )
+
+    this.currentStatus = this.story.status
   }
 }
 </script>

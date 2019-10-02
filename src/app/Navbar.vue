@@ -12,7 +12,7 @@
 
     <template slot="end" v-if="currentUser">
       <b-navbar-dropdown
-        v-bind:label="currentUser.displayName"
+        v-bind:label="currentUser.email"
         v-bind:boxed="true">
         <b-navbar-item
           tag="router-link"

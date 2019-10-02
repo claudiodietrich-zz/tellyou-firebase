@@ -103,9 +103,9 @@ export default {
           await firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
 
           const user = firebase.auth().currentUser
-          await user.updateProfile({ displayName: this.name })
+          user.updateProfile({ displayName: this.name })
 
-          await db.collection('users').add({
+          db.collection('users').add({
             uid: user.uid,
             name: user.displayName,
             email: user.email

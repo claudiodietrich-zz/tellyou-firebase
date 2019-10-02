@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
 import { required, requiredIf } from 'vuelidate/lib/validators'
 import { db } from '@/libs/firebase'
 import EventEditModal from '@/app/story/components/EventEditModal.vue'
@@ -151,15 +152,17 @@ export default {
         this.$v.event.$touch()
 
         if (!this.$v.event.$invalid) {
+          const currentUser = firebase.auth().currentUser
+
           this.event.storyId = this.story.id
           this.event.storyStatus = this.story.status
           this.event.stageId = this.stage.id
           this.event.number = this.events.length + 1
           this.event.author = {
-            uid: this.$store.state.user.uid,
-            name: this.$store.state.user.displayName
+            uid: currentUser.uid,
+            name: currentUser.displayName
           }
-          this.event.readBy = [this.$store.state.user.uid]
+          this.event.readBy = [currentUser.uid]
 
           await db.collection('events').add(this.event)
 

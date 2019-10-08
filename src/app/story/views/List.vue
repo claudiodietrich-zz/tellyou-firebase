@@ -60,18 +60,22 @@
         </div>
 
         <footer class="card-footer">
-          <router-link class="button is-primary mr-2"
+          <router-link
+            class="button is-primary mr-2"
             v-bind:to="{ name: 'storyView', params: { id: story.id } }">
             {{ $t('default.label.tell', [ $tc('default.label.story') ]) }}
           </router-link>
 
-          <router-link class="button is-primary mr-2"
+          <router-link
+            class="button is-primary mr-2"
+            v-if="userCanEditStory(story)"
             v-bind:to="{ name: 'storyEdit', params: { id: story.id } }">
             {{ $t('default.label.edit', []) }}
           </router-link>
 
           <button
             class="button is-danger"
+            v-if="userCanDeleteStory(story)"
             v-on:click="confirmDelete(story)">
             {{ $t('default.label.delete', []) }}
           </button>
@@ -82,6 +86,7 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
 import { db } from '@/libs/firebase'
 
 export default {
@@ -124,6 +129,18 @@ export default {
           this.storyToDelete = null
         }
       })
+    },
+    userCanEditStory (story) {
+      const currentUser = firebase.auth().currentUser
+      const isLeader = story.leader.uid === currentUser.uid
+
+      return isLeader
+    },
+    userCanDeleteStory (story) {
+      const currentUser = firebase.auth().currentUser
+      const isLeader = story.leader.uid === currentUser.uid
+
+      return isLeader
     }
   },
   mounted () {

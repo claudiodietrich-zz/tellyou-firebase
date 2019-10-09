@@ -298,11 +298,12 @@ export default {
       })
     },
     async getArchetypes () {
-      try {
-        await this.$bind('archetypesTableData', db.collection('archetypes').orderBy('name'))
-      } catch (error) {
-        throw error
-      }
+      const querySnapshot = await db.collection('archetypes').orderBy('name').get()
+      querySnapshot.forEach(doc => {
+        let archetype = doc.data()
+        archetype.id = doc.id
+        this.archetypesTableData.push(archetype)
+      })
     },
     checkAllArchetypes (archetypes) {
       const requiredArchetypes = this.archetypesTableData.filter(archetype => {
@@ -321,11 +322,12 @@ export default {
       })
     },
     async getStages () {
-      try {
-        await this.$bind('stagesTableData', db.collection('stages'))
-      } catch (error) {
-        throw error
-      }
+      const querySnapshot = await db.collection('stages').get()
+      querySnapshot.forEach(doc => {
+        let stage = doc.data()
+        stage.id = doc.id
+        this.stagesTableData.push(stage)
+      })
     },
     checkAllStages (stages) {
       const requiredStages = this.stagesTableData.filter(stage => {

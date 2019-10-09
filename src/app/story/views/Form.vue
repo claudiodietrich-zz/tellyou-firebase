@@ -299,7 +299,7 @@ export default {
     },
     async getArchetypes () {
       try {
-        await this.$bind('archetypesTableData', db.collection('archetypes'))
+        await this.$bind('archetypesTableData', db.collection('archetypes').orderBy('name'))
       } catch (error) {
         throw error
       }
@@ -338,10 +338,6 @@ export default {
       this.startRequest()
       try {
         if (!this.$v.$invalid && this.archetypesAreValid && this.activeStep === 3) {
-          this.story.stages = this.story.stages.map(stage => {
-            return db.collection('stages').doc(stage.id)
-          })
-
           await db.collection('stories').add(this.story)
 
           this.$router.push({ name: 'storyList' })
@@ -363,10 +359,6 @@ export default {
     async editStory () {
       this.startRequest()
       try {
-        this.story.stages = this.story.stages.map(stage => {
-          return db.collection('stages').doc(stage.id)
-        })
-
         await db.collection('stories').doc(this.story.id).update(this.story)
 
         this.$router.push({ name: 'storyList' })
@@ -391,6 +383,14 @@ export default {
           return archetype.name !== storyArchetype.name
         })
         this.archetypesTableData.push(storyArchetype)
+      })
+      this.archetypesTableData.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
+      this.story.stages.forEach(storyStage => {
+        this.stagesTableData = this.stagesTableData.filter(stage => {
+          return stage.name !== storyStage.name
+        })
+        this.stagesTableData.push(storyStage)
       })
     } else {
       const currentUser = firebase.auth().currentUser

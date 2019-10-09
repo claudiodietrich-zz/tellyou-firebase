@@ -14,6 +14,7 @@
           <div class="level-item">
             <button
               class="button is-primary is-rounded"
+              v-if="isLeader"
               v-on:click="goToNextHistoryStage">
               {{ buttonNextStageText }}
             </button>
@@ -65,24 +66,27 @@
 </template>
 
 <script>
-import store from '@/store'
+import firebase from 'firebase'
 import storyEnums from '@/app/story/story.enum'
 import { db } from '@/libs/firebase'
 
 export default {
   data () {
     return {
-      buttonNextStageText: ''
+      buttonNextStageText: '',
+      story: {}
     }
   },
   computed: {
-    story () {
-      return this.$store.state.story.story
+    isLeader () {
+      const currentUser = firebase.auth().currentUser
+
+      return this.story.leader.uid === currentUser.uid
     }
   },
   methods: {
     setButtonNextStageText () {
-      const storyStatus = this.$store.state.story.story.status
+      const storyStatus = this.story.status
 
       switch (storyStatus) {
         case storyEnums.STATUS.underConstruction:
@@ -116,13 +120,17 @@ export default {
       this.endRequest()
     }
   },
-  beforeMount () {
-    this.setButtonNextStageText()
-  },
-  async beforeRouteEnter (to, from, next) {
-    const id = to.params.id
-    await store.dispatch('story/bindStory', { id })
-    next()
+  async beforeMount () {
+    db.collection('stories')
+      .doc(this.$route.params.id)
+      .get()
+      .then(doc => {
+        this.story = doc.data()
+        this.story.id = doc.id
+      })
+      .then(() => {
+        this.setButtonNextStageText()
+      })
   }
 }
 </script>

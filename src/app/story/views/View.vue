@@ -109,13 +109,13 @@ export default {
         status: nextStatus
       })
 
-      const events = await db.collection('events').where('storyId', '==', this.story.id).where('storyStatus', '==', currentStatus).get()
+      const events = await db.collection('stories').doc(this.story.id).collection('events').where('storyId', '==', this.story.id).where('storyStatus', '==', currentStatus).get()
 
       events.forEach(async event => {
         let newEvent = event.data()
         newEvent.storyStatus = this.story.status
 
-        await db.collection('events').add(newEvent)
+        await db.collection('stories').doc(this.story.id).collection('events').add(newEvent)
       })
       this.endRequest()
     }

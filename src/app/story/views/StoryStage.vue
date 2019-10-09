@@ -18,6 +18,7 @@
         <div class="level-right">
           <div class="level-item">
             <b-select
+              v-if="isLeader"
               v-model="currentStatus"
               v-on:input="selectEventsFromStatus">
               <option
@@ -50,12 +51,14 @@
         <footer class="card-footer">
           <button
             class="button is-primary mr-2"
+            v-if="isLeader || isReviewer || isEventAuthor(event)"
             v-on:click="openEditEventModal(event)">
             {{ $t('default.label.edit', []) }}
           </button>
 
           <button
             class="button is-danger"
+            v-if="isLeader || isReviewer || isEventAuthor(event)"
             v-on:click="confirmDelete(event)">
             {{ $t('default.label.delete', []) }}
           </button>
@@ -101,7 +104,8 @@
     <b-modal v-bind:active.sync="isEditEventModalActive" has-modal-card>
       <event-edit-modal
         v-bind:keyPhrases="stage.keyPhrases"
-        v-bind:event="eventToBeUpdated"/>
+        v-bind:event="eventToBeUpdated"
+        v-bind:storyId="story.id"/>
     </b-modal>
   </section>
 </template>
@@ -145,6 +149,22 @@ export default {
       }
     }
   },
+  computed: {
+    isLeader () {
+      const currentUser = firebase.auth().currentUser
+
+      return this.story.leader.uid === currentUser.uid
+    },
+    isReviewer () {
+      const currentUser = firebase.auth().currentUser
+
+      const reviewer = this.story.reviewers.filter(reviewer => {
+        return reviewer.uid === currentUser.uid
+      })[0]
+
+      return reviewer
+    }
+  },
   methods: {
     async addEvent () {
       this.startRequest()
@@ -154,7 +174,6 @@ export default {
         if (!this.$v.event.$invalid) {
           const currentUser = firebase.auth().currentUser
 
-          this.event.storyId = this.story.id
           this.event.storyStatus = this.story.status
           this.event.stageId = this.stage.id
           this.event.number = this.events.length + 1
@@ -164,7 +183,7 @@ export default {
           }
           this.event.readBy = [currentUser.uid]
 
-          await db.collection('events').add(this.event)
+          await db.collection('stories').doc(this.story.id).collection('events').add(this.event)
 
           this.event.keyPhrase = ''
           this.event.body = ''
@@ -193,7 +212,7 @@ export default {
     },
     async deleteEvent () {
       try {
-        await db.collection('events').doc(this.eventToDeleted.id).delete()
+        await db.collection('stories').doc(this.story.id).collection('events').doc(this.eventToDeleted.id).delete()
         this.$buefy.toast.open(this.$tc('default.message.delete', 1, [this.$tc('default.label.event')]))
       } catch (error) {
         this.errorHandler(error)
@@ -205,26 +224,44 @@ export default {
     },
     async selectEventsFromStatus (status) {
       await this.$bind('events',
-        db.collection('events')
-          .where('storyId', '==', this.story.id)
+        db.collection('stories')
+          .doc(this.story.id)
+          .collection('events')
           .where('storyStatus', '==', status)
           .where('stageId', '==', this.stage.id)
           .orderBy('number')
       )
+    },
+    isEventAuthor (event) {
+      const currentUser = firebase.auth().currentUser
+
+      return event.author.uid === currentUser.uid
     }
   },
-  async created () {
-    await this.$bind('story', db.collection('stories').doc(this.$route.params.storyId))
-    await this.$bind('stage', db.collection('stages').doc(this.$route.params.stageId))
-    await this.$bind('events',
-      db.collection('events')
-        .where('storyId', '==', this.story.id)
-        .where('storyStatus', '==', this.story.status)
-        .where('stageId', '==', this.stage.id)
-        .orderBy('number')
-    )
+  created () {
+    db.collection('stories')
+      .doc(this.$route.params.storyId)
+      .get()
+      .then(doc => {
+        this.story = doc.data()
+        this.story.id = doc.id
 
-    this.currentStatus = this.story.status
+        this.stage = this.story.stages.filter(stage => {
+          return stage.id === this.$route.params.stageId
+        })[0]
+
+        this.$bind(
+          'events',
+          db.collection('stories')
+            .doc(this.story.id)
+            .collection('events')
+            .where('storyStatus', '==', this.story.status)
+            .where('stageId', '==', this.stage.id)
+            .orderBy('number')
+        )
+
+        this.currentStatus = this.story.status
+      })
   }
 }
 </script>

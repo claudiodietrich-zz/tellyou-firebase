@@ -53,7 +53,7 @@ import { required, requiredIf } from 'vuelidate/lib/validators'
 import { db } from '@/libs/firebase'
 
 export default {
-  props: ['keyPhrases', 'event'],
+  props: ['keyPhrases', 'event', 'storyId'],
   data () {
     return {
       keyPhrase: this.event.keyPhrase,
@@ -79,7 +79,7 @@ export default {
           this.event.keyPhrase = this.keyPhrase
           this.event.body = this.body
 
-          const eventRef = db.collection('events').doc(this.event.id)
+          const eventRef = db.collection('stories').doc(this.storyId).collection('events').doc(this.event.id)
           await eventRef.update(this.event)
 
           this.$parent.close()

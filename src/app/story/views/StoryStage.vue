@@ -36,34 +36,41 @@
         {{ stage.description }}
       </h2>
 
-      <div class="card mb-4"
-        v-for="event in events"
-        v-bind:key="event.id">
-        <div class="card-content">
-          <div class="content">
-            {{ `${event.keyPhrase} ${event.body}` }}
-          </div>
+      <draggable
+        v-model="events"
+        v-on:end="updateEvents"
+        v-bind:options="{ disabled: isAuthor }">
+        <transition-group>
+          <div class="card mb-4"
+            v-for="event in events"
+            v-bind:key="event.id">
+            <div class="card-content">
+              <div class="content">
+                 {{ `${event.keyPhrase} ${event.body}` }}
+              </div>
 
-          <div class="is-size-7 has-text-right">
-            {{ event.author.name }}
-          </div>
-        </div>
-        <footer class="card-footer">
-          <button
-            class="button is-primary mr-2"
-            v-if="isLeader || isReviewer || isEventAuthor(event)"
-            v-on:click="openEditEventModal(event)">
-            {{ $t('default.label.edit', []) }}
-          </button>
+              <div class="is-size-7 has-text-right">
+                {{ event.author.name }}
+              </div>
+            </div>
+            <footer class="card-footer">
+              <button
+                class="button is-primary mr-2"
+                v-if="isLeader || isReviewer || isEventAuthor(event)"
+                v-on:click="openEditEventModal(event)">
+                {{ $t('default.label.edit', []) }}
+              </button>
 
-          <button
-            class="button is-danger"
-            v-if="isLeader || isReviewer || isEventAuthor(event)"
-            v-on:click="confirmDelete(event)">
-            {{ $t('default.label.delete', []) }}
-          </button>
-        </footer>
-      </div>
+              <button
+                class="button is-danger"
+                v-if="isLeader || isReviewer || isEventAuthor(event)"
+                v-on:click="confirmDelete(event)">
+                {{ $t('default.label.delete', []) }}
+              </button>
+            </footer>
+          </div>
+        </transition-group>
+      </draggable>
 
       <b-field
         v-bind:label="$tc('default.label.keyPhrase')"
@@ -113,12 +120,14 @@
 <script>
 import firebase from 'firebase/app'
 import { required, requiredIf } from 'vuelidate/lib/validators'
+import draggable from 'vuedraggable'
 import { db } from '@/libs/firebase'
 import EventEditModal from '@/app/story/components/EventEditModal.vue'
 import storyEnums from '@/app/story/story.enum'
 
 export default {
   components: {
+    draggable,
     EventEditModal
   },
   data () {
@@ -163,6 +172,15 @@ export default {
       })[0]
 
       return reviewer
+    },
+    isAuthor () {
+      const currentUser = firebase.auth().currentUser
+
+      const author = this.story.authors.filter(author => {
+        return author.uid === currentUser.uid
+      })[0]
+
+      return author
     }
   },
   methods: {
@@ -236,6 +254,24 @@ export default {
       const currentUser = firebase.auth().currentUser
 
       return event.author.uid === currentUser.uid
+    },
+    async updateEvents () {
+      this.startRequest()
+
+      try {
+        this.events.forEach(async (event, index) => {
+          const currentNumber = index + 1
+
+          if (event.number !== currentNumber) {
+            event.number = currentNumber
+
+            await db.collection('stories').doc(this.story.id).collection('events').doc(event.id).update(event)
+          }
+        })
+      } catch (error) {
+        this.errorHandler(error)
+      }
+      this.endRequest()
     }
   },
   created () {

@@ -44,6 +44,7 @@ export default {
         data: 'ops, ainda não existe {0} no sistema | ops, ainda não existem {0} no sistema',
         result: 'ops, nenhum resultado encontrado'
       },
+      number: 'número | números',
       objective: 'objetivo | objetivos',
       optional: 'opcional',
       required: 'obrigatório',
@@ -66,6 +67,7 @@ export default {
         required: 'ops, você precisa preencher este campo!'
       }
     },
+    minValue: 'ops, o valor deste campo precisa ser maior do que {0}',
     password: {
       minLength: 'ops, sua senha precisa ter no mínimo {minLength} caracteres'
     }

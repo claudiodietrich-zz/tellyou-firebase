@@ -129,6 +129,12 @@
               <template
                 slot-scope="props">
                 <b-table-column
+                  v-bind:label="$tc('default.label.number', 1)"
+                  field="description">
+                  {{ props.row.number }}
+                </b-table-column>
+
+                <b-table-column
                   v-bind:label="$tc('default.label.stage', 2)"
                   field="name">
                   <a
@@ -322,7 +328,7 @@ export default {
       })
     },
     async getStages () {
-      const querySnapshot = await db.collection('stages').get()
+      const querySnapshot = await db.collection('stages').orderBy('number').get()
       querySnapshot.forEach(doc => {
         let stage = doc.data()
         stage.id = doc.id
@@ -361,9 +367,11 @@ export default {
     async editStory () {
       this.startRequest()
       try {
-        await db.collection('stories').doc(this.story.id).update(this.story)
+        if (!this.$v.$invalid && this.archetypesAreValid && this.activeStep === 3) {
+          await db.collection('stories').doc(this.story.id).update(this.story)
 
-        this.$router.push({ name: 'storyList' })
+          this.$router.push({ name: 'storyList' })
+        }
       } catch (error) {
         this.errorHandler(error)
       }
@@ -394,6 +402,7 @@ export default {
         })
         this.stagesTableData.push(storyStage)
       })
+      this.stagesTableData.sort((a, b) => (a.number > b.number) ? 1 : -1)
     } else {
       const currentUser = firebase.auth().currentUser
 

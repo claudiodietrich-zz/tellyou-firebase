@@ -30,7 +30,7 @@
         v-bind:key="stage.id">
         <header class="card-header">
           <div class="card-header-title">
-            {{ stage.name }}
+            {{ stage.number }} - {{ stage.name }}
             <b-tag
               class="ml-2"
               v-bind:type="stage.isRequired ? 'is-primary' : 'is-secondary'"
@@ -122,7 +122,7 @@ export default {
     async getStages () {
       this.startRequest()
       try {
-        await this.$bind('stages', db.collection('stages'))
+        await this.$bind('stages', db.collection('stages').orderBy('number'))
       } catch (error) {
         throw error
       }

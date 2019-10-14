@@ -13,6 +13,17 @@
 
       <div class="box">
         <b-field
+          v-bind:label="$tc('default.label.number', 1)"
+          v-bind:type="{ 'is-danger': $v.stage.number.$error }"
+          v-bind:message="[ !$v.stage.number.required && $v.stage.number.$error ? $t('error.field.is.required'):'',
+                            !$v.stage.number.minValue && $v.stage.number.$error ? $t('error.minValue', [ '0' ]):'' ]">
+          <b-numberinput
+            v-model="stage.number"
+            v-bind:disabled="isUnderRequest"
+            min="0"/>
+        </b-field>
+
+        <b-field
           v-bind:label="$t('stage.view.form.label.name')"
           v-bind:type="{ 'is-danger': $v.stage.name.$error }"
           v-bind:message="[ !$v.stage.name.required && $v.stage.name.$error ? $t('error.field.is.required'):'']">
@@ -91,7 +102,7 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required, minValue } from 'vuelidate/lib/validators'
 import { db } from '@/libs/firebase'
 
 export default {
@@ -101,6 +112,7 @@ export default {
       archetypesList: null,
       filteredArchetypesList: [],
       stage: {
+        number: 0,
         name: '',
         description: '',
         archetypes: [],
@@ -112,6 +124,10 @@ export default {
   },
   validations: {
     stage: {
+      number: {
+        required,
+        minValue: minValue(0)
+      },
       name: {
         required
       },

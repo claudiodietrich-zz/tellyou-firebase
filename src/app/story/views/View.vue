@@ -38,7 +38,7 @@
         <div class="timeline">
           <div
             class="timeline-item"
-            v-for="(stage, index) in story.stages"
+            v-for="(stage, index) in orderedStages"
             v-bind:key="stage.id">
             <div
               class="timeline-marker is-32x32"
@@ -82,6 +82,10 @@ export default {
       const currentUser = firebase.auth().currentUser
 
       return this.story.leader.uid === currentUser.uid
+    },
+    orderedStages () {
+      const orderedStages = this.story.stages
+      return orderedStages.sort((a, b) => (a.number > b.number) ? 1 : -1)
     }
   },
   methods: {
